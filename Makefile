@@ -15,32 +15,26 @@ SRC = src
 OBJ = obj
 INC = include
 
-OBJS = $(OBJ)/main.o
-# HDRS = $(INC)/escalonador.h $(INC)/filadehosts.h $(INC)/listadeurls.h $(INC)/memlog.h
+OBJS = $(OBJ)/main.o $(OBJ)/geradorderodadas.o $(OBJ)/quicksort.o 
+HDRS = $(INC)/geradorderodadas.h $(INC)/memlog.h $(INC)/entidade.h 
 
-CXXFLAGS = -c -std=c++11 -Wall -I$(INC)
+CXXFLAGS = -g -c -std=c++11 -Wall -I$(INC)
 
 EXE = $(BIN)/main
 
 all: $(EXE)
 
 $(BIN)/main: $(OBJS)
-	$(CXX) -o $(BIN)/main $(OBJS)
+	@$(CXX) -o $(BIN)/main $(OBJS)
 
 $(OBJ)/main.o: $(HDRS) $(SRC)/main.cpp
-	$(CXX) $(CXXFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp
+	@$(CXX) $(CXXFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp
 
-$(OBJ)/escalonador.o: $(HDRS) $(SRC)/escalonador.cpp
-	$(CXX) $(CXXFLAGS) -o $(OBJ)/escalonador.o $(SRC)/escalonador.cpp
+$(OBJ)/geradorderodadas.o: $(HDRS) $(SRC)/geradorderodadas.cpp
+	@$(CXX) $(CXXFLAGS) -o $(OBJ)/geradorderodadas.o $(SRC)/geradorderodadas.cpp
 
-$(OBJ)/filadehosts.o: $(HDRS) $(SRC)/filadehosts.cpp
-	$(CXX) $(CXXFLAGS) -o $(OBJ)/filadehosts.o $(SRC)/filadehosts.cpp
+$(OBJ)/quicksort.o: $(HDRS) $(SRC)/quicksort.cpp
+	@$(CXX) $(CXXFLAGS) -o $(OBJ)/quicksort.o $(SRC)/quicksort.cpp
 
-$(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
-	$(CXX) $(CXXFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c
-
-$(OBJ)/listadeurls.o: $(HDRS) $(SRC)/listadeurls.cpp
-	$(CXX) $(CXXFLAGS) -o $(OBJ)/listadeurls.o $(SRC)/listadeurls.cpp
-		
 clean:
-	rm $(EXE) $(OBJS)
+	@rm $(EXE) $(OBJS)
