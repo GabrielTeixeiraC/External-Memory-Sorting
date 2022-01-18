@@ -15,8 +15,8 @@ SRC = src
 OBJ = obj
 INC = include
 
-OBJS = $(OBJ)/main.o $(OBJ)/geradorderodadas.o $(OBJ)/quicksort.o 
-HDRS = $(INC)/geradorderodadas.h $(INC)/memlog.h $(INC)/entidade.h 
+OBJS = $(OBJ)/main.o $(OBJ)/geradorderodadas.o $(OBJ)/quicksort.o  $(OBJ)/heap.o 
+HDRS = $(INC)/geradorderodadas.h $(INC)/quicksort.h $(INC)/heap.h $(INC)/entidade.h $(INC)/memlog.h
 
 CXXFLAGS = -g -c -std=c++11 -Wall -I$(INC)
 
@@ -35,6 +35,10 @@ $(OBJ)/geradorderodadas.o: $(HDRS) $(SRC)/geradorderodadas.cpp
 
 $(OBJ)/quicksort.o: $(HDRS) $(SRC)/quicksort.cpp
 	@$(CXX) $(CXXFLAGS) -o $(OBJ)/quicksort.o $(SRC)/quicksort.cpp
+
+$(OBJ)/heap.o: $(HDRS) $(SRC)/heap.cpp
+	@$(CXX) $(CXXFLAGS) -o $(OBJ)/heap.o $(SRC)/heap.cpp
+
 
 clean:
 	@rm $(EXE) $(OBJS)

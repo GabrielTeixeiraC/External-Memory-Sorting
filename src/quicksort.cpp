@@ -18,10 +18,10 @@ void QuickSort::Particao(int Esq, int Dir, int *i, int *j, Entidade entidades[])
     *j = Dir;
     x = entidades[(*i + *j)/2].numeroDeVisitas; /* obtem o pivo x */
     do { 
-        while (x > entidades[*i].numeroDeVisitas){
+        while (x < entidades[*i].numeroDeVisitas){
             (*i)++;
         }
-        while (x < entidades[*j].numeroDeVisitas) {
+        while (x > entidades[*j].numeroDeVisitas) {
             (*j)--;
         }
         if (*i <= *j){
