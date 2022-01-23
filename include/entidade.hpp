@@ -11,9 +11,11 @@
 #include <string>
 using namespace std;
 
+// Entidade: guarda uma url, o numero de visitas e o numero da fita na hora de intercalar
 struct Entidade {
     string url;
     int numeroDeVisitas;
+    int numeroDaFita;
 };
 
 #endif

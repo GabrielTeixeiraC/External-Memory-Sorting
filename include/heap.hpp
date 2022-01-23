@@ -8,21 +8,23 @@
 #ifndef HEAPH
 #define HEAPH
 
-
-
 #include <iostream>
 #include <string>
-#include "entidade.h"
+#include "entidade.hpp"
 using namespace std;
 
 
 class Heap {
     public:
+        Heap() = default;
         Heap(int tamanhoDoHeap);
-        ~Heap();
+        void desaloca();
+        void constroi();
         void refaz(int Esq, int Dir);
         void adiciona(Entidade entidade);
+        int getNumeroDeEntidades();
         Entidade remove();
+        
         Entidade* heapDeEntidades;
     protected:
         int numeroDeEntidades;

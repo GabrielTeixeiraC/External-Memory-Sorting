@@ -8,19 +8,19 @@
 #define GERADORDERODADASH
 
 #include <iostream>
+#include <fstream>
 #include <string>
-#include "entidade.h"
+#include "entidade.hpp"
 using namespace std;
 
 
 class GeradorDeRodadas {
     public:
-        GeradorDeRodadas(string nomeArquivoDeEntrada, int numeroDeEntidades);
-        void leEntidades(Entidade entidades[]);
-        void ordena(Entidade entidades[]);
-        void escreve(Entidade* entidades, int numeroDaRodada);
+        GeradorDeRodadas(int numeroDeEntidades);
+        void leEntidades(Entidade * entidades, ifstream& arquivoDeEntrada);
+        void ordena(Entidade * entidades);
+        void escreve(Entidade * entidades, int numeroDaRodada);
     protected:
-        string nomeArquivoDeEntrada;
         int numeroDeEntidades;
 };
 

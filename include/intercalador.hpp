@@ -9,17 +9,20 @@
 
 #include <iostream>
 #include <string>
-#include "entidade.h"
+#include "entidade.hpp"
+#include "heap.hpp"
 using namespace std;
 
 
 class Intercalador {
     public:
-        Intercalador();
-        void intercala();
+        Intercalador(int numeroDeEntidades, int numeroDeFitas, string nomeArquivoSaida);
+        void intercala(ifstream vetorDeArquivos[]);
     protected:
-        string nomeArquivoDeEntrada;
         int numeroDeEntidades;
+        int numeroDeFitas;
+        string nomeArquivoSaida;
+        Heap heapDeEntidades;
 };
 
 #endif
