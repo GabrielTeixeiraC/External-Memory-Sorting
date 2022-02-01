@@ -20,8 +20,10 @@ class GeradorDeRodadas {
         void leEntidades(Entidade * entidades, ifstream& arquivoDeEntrada);
         void ordena(Entidade * entidades);
         void escreve(Entidade * entidades, int numeroDaRodada);
+        bool leituraTerminou();
     protected:
         int numeroDeEntidades;
+        bool terminou = 0;
 };
 
 #endif

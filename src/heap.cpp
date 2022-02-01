@@ -8,6 +8,7 @@
 #include <iostream>
 #include "heap.hpp"
 #include "string.h"
+#include "memlog.hpp"
 
 // Construtor do heap
 Heap::Heap(int tamanhoDoHeap){
@@ -30,7 +31,6 @@ void Heap::constroi(){
     int final = this->numeroDeEntidades - 1;
 
     Esq = (final + 1) / 2;
-
     // refaz o heap a partir das entidades que não são folhas
     while (Esq > 0){
         Esq--;
@@ -47,7 +47,10 @@ void Heap::refaz(int Esq, int Dir){
 
     i = Esq;
     j = (i * 2) + 1;
+
     x = heapDeEntidades[i];
+    leMemLog( (long int) (&heapDeEntidades[i]), sizeof(Entidade), 2);
+    escreveMemLog( (long int) (&x), sizeof(Entidade), 2);
 
     while (j <= Dir){
         // pega o maior filho do nó
@@ -78,12 +81,17 @@ void Heap::refaz(int Esq, int Dir){
 
         // coloca a entidade filha no lugar do pai se o filho for maior
         heapDeEntidades[i] = heapDeEntidades[j];
+        leMemLog( (long int) (&heapDeEntidades[j]), sizeof(Entidade), 2);
+        escreveMemLog( (long int) (&heapDeEntidades[i]), sizeof(Entidade), 2);
+
         i = j;
         j = (i * 2) + 1;
     }
     
     // atualiza o valor do filho com a entidade vinda de cima
     heapDeEntidades[i] = x;
+    leMemLog( (long int) (&x), sizeof(Entidade), 2);
+    escreveMemLog( (long int) (&heapDeEntidades[i]), sizeof(Entidade), 2);
 }
 
 // Descricao: método que le as entidades de um arquivo de entrada
@@ -96,6 +104,8 @@ void Heap::adiciona(Entidade entidade){
     // adiciona o elemento no final do heap
     int final = numeroDeEntidades - 1;
     heapDeEntidades[final] = entidade;
+    leMemLog( (long int) (&entidade), sizeof(Entidade), 2);
+    escreveMemLog( (long int) (&heapDeEntidades[final]), sizeof(Entidade), 2);   
     
     // constroi o heap
     constroi();
@@ -112,10 +122,14 @@ int Heap::getNumeroDeEntidades(){
 Entidade Heap::remove(){
     // pega o elemento do topo
     Entidade aux = heapDeEntidades[0];
+    leMemLog( (long int) (&heapDeEntidades[0]), sizeof(Entidade), 2);
+    escreveMemLog( (long int) (&aux), sizeof(Entidade), 2);
     
     // copia pro topo o elemento no final do heap
     heapDeEntidades[0] = heapDeEntidades[numeroDeEntidades - 1];
-    
+    leMemLog( (long int) (&heapDeEntidades[numeroDeEntidades - 1]), sizeof(Entidade), 2);
+    escreveMemLog( (long int) (&heapDeEntidades[0]), sizeof(Entidade), 2);
+
     // atualiza o número de entidades
     numeroDeEntidades--;
 

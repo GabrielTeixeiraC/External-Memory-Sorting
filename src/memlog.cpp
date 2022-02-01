@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "memlog.h"
-#include "msgassert.h"
+#include "memlog.hpp"
+#include "msgassert.hpp"
 
 // constantes definindo os estados de registro
 #define MLATIVO 1

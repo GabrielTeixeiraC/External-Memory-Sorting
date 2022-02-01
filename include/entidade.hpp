@@ -16,6 +16,12 @@ struct Entidade {
     string url;
     int numeroDeVisitas;
     int numeroDaFita;
+
+    Entidade(){
+        url = "";
+        numeroDeVisitas = 0;
+        numeroDaFita = 0;
+    }
 };
 
 #endif

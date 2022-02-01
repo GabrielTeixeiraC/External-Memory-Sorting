@@ -11,7 +11,7 @@
 #include "msgassert.hpp"
 #include "entidade.hpp"
 #include "quicksort.hpp"
-#include "msgassert.hpp"
+#include "memlog.hpp"
 
 using namespace std;
 
@@ -28,25 +28,38 @@ void GeradorDeRodadas::leEntidades(Entidade * entidades, ifstream& arquivoDeEntr
     for (int i = 0; i < this->numeroDeEntidades; i++){
         string url = "";
         unsigned long numeroDeVisitas = 0;
-        
         arquivoDeEntrada >> url >> numeroDeVisitas;
-        
-        // asserção de leitura correta de entidade
-        erroAssert(arquivoDeEntrada.good(), "Leitura inválida de entidade");
-        
-        // asserção de tamanho da url válido
-        erroAssert(url.size() > 0, "Url não pode ser vazia.");
-        
-        // asserção de leitura de número de visitas positivo
-        erroAssert(numeroDeVisitas >= 0, "Número de visitas deve ser positivo");
+        if (!arquivoDeEntrada.eof()) {
+            // asserção de leitura correta de entidade
+            erroAssert(arquivoDeEntrada.good(), "Leitura inválida de entidade");
+            
+            // asserção de tamanho da url válido
+            erroAssert(url.size() > 0, "Url não pode ser vazia.");
+            
+            // asserção de leitura de número de visitas positivo
+            erroAssert(numeroDeVisitas >= 0, "Número de visitas deve ser positivo");
 
-        // atribuição da entidade lida no vetor  
-        Entidade aux;
+            // atribuição da entidade lida no vetor  
+            Entidade aux;
 
-        aux.url = url;
-        aux.numeroDeVisitas = numeroDeVisitas;
+            aux.url = url;
+            escreveMemLog( (long int) (&aux.url), sizeof(string), 1);
+            aux.numeroDeVisitas = numeroDeVisitas;
+            escreveMemLog( (long int) (&aux.numeroDeVisitas), sizeof(unsigned long), 1);
 
-        entidades[i] = aux; 
+            entidades[i] = aux; 
+            leMemLog( (long int) (&aux), sizeof(Entidade), 1);
+            escreveMemLog( (long int) (&entidades[i]), sizeof(Entidade), 1);
+
+        }
+        
+        // quebra o loop se estiver no fim do arquivo e checa se a leitura foi vazia.
+        else {
+            if (i == 0){
+                this->terminou = true;
+            }
+            break;
+        }
     }
 
 }
@@ -57,7 +70,6 @@ void GeradorDeRodadas::leEntidades(Entidade * entidades, ifstream& arquivoDeEntr
 void GeradorDeRodadas::ordena(Entidade * entidades) {
     // instanciação do objeto ordenador
     QuickSort ordenadorQuickSort = QuickSort(this->numeroDeEntidades);
-
     // chama o método ordenador
     ordenadorQuickSort.OrdenaQuickSort(entidades);
 }
@@ -79,9 +91,19 @@ void GeradorDeRodadas::escreve(Entidade * entidades, int numeroDaRodada){
 
     // escrita das entidades no arquivo de saída
     for (int i = 0; i < this->numeroDeEntidades; i++){
-        arquivoDeSaida << entidades[i].url << " " << entidades[i].numeroDeVisitas << endl;
+        if (entidades[i].url == "") {
+            break;
+        }
+        
+        arquivoDeSaida << entidades[i].url << " " << entidades[i].numeroDeVisitas << endl;   
+        leMemLog( (long int) (&entidades[i].url), sizeof(string), 1);
+        leMemLog( (long int) (&entidades[i].numeroDeVisitas), sizeof(int), 1);
     }
     
     // fechamento do arquivo de saída
     arquivoDeSaida.close();
+}
+
+bool GeradorDeRodadas::leituraTerminou() {
+    return this->terminou;
 }

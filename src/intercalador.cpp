@@ -9,6 +9,7 @@
 #include <fstream>
 #include "intercalador.hpp"
 #include "msgassert.hpp"
+#include "memlog.hpp"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ Intercalador::Intercalador(int numeroDeEntidades, int numeroDeFitas, string nome
     int tamanhoMaximoHeap = numeroDeEntidades * numeroDeFitas;
     // constroi o heap com o tamanho maximo definido pelos parâmetros do programa
     this->heapDeEntidades = Heap(tamanhoMaximoHeap);
+    
 }
 
 // Descricao: método que intercala as fitas geradas anteriormente e imprime em um arquivo de saída
@@ -38,13 +40,15 @@ void Intercalador::intercala(ifstream vetorDeArquivos[]){
         unsigned long numeroDeVisitas;
 
         vetorDeArquivos[i] >> url >> numeroDeVisitas;
-
         Entidade aux;
 
         aux.url = url;
+        escreveMemLog( (long int) (&aux.url), sizeof(string), 3);
         aux.numeroDeVisitas = numeroDeVisitas;
+        escreveMemLog( (long int) (&aux.numeroDeVisitas), sizeof(unsigned long), 3);
         aux.numeroDaFita = i + 1;
-
+        escreveMemLog( (long int) (&aux.numeroDaFita), sizeof(int), 3);
+        
         heapDeEntidades.adiciona(aux);
     }
 
@@ -52,10 +56,12 @@ void Intercalador::intercala(ifstream vetorDeArquivos[]){
     while (heapDeEntidades.getNumeroDeEntidades() > 0) {
         // remove a entidade do topo do heap
         Entidade aux = heapDeEntidades.remove();
+        escreveMemLog( (long int) (&aux), sizeof(Entidade), 3);
 
         // escreve no arquivo de saída a entidade removida
         arquivoDeSaida << aux.url << " " << aux.numeroDeVisitas << endl;
-        
+        leMemLog( (long int) (&aux.url), sizeof(string), 3);
+        leMemLog( (long int) (&aux.numeroDeVisitas), sizeof(int), 3);
         int origemDaEntidade = aux.numeroDaFita - 1;
         
         string url;
@@ -63,13 +69,17 @@ void Intercalador::intercala(ifstream vetorDeArquivos[]){
 
         // lê o próximo elemento do arquivo da entidade removida do heap 
         vetorDeArquivos[origemDaEntidade] >> url >> numeroDeVisitas;
-        
         if (!vetorDeArquivos[origemDaEntidade].eof()){
             Entidade aux;
 
             aux.url = url;
+            escreveMemLog( (long int) (&aux.url), sizeof(string), 3);
+
             aux.numeroDeVisitas = numeroDeVisitas;
+            escreveMemLog( (long int) (&aux.numeroDeVisitas), sizeof(unsigned long), 3);
+
             aux.numeroDaFita = origemDaEntidade + 1;
+            escreveMemLog( (long int) (&aux.numeroDaFita), sizeof(int), 3);
             
             // adiciona no heap a entidade lida
             heapDeEntidades.adiciona(aux);

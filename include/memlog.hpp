@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------
-// Arquivo      : memlog.h
+// Arquivo      : memlog.hpp
 // Conteudo     : definicoes da biblioteca de registro de acessos
 // Autor        : Wagner Meira Jr. (meira@dcc.ufmg.br)
 // Historico    : 2021-10-18 - arquivo criado
