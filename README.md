@@ -7,6 +7,8 @@ Finally, the sorted tapes are merged through a Heap, resulting in a single sorte
 
 The ultimate goal of the program is therefore to generate a sorted file containing all input entities, efficiently in terms of memory usage and processing time.
 
+All data structures were implemented without using the STL or similar libraries.
+
 ## Compilation:
 To compile the program, navigate to the directory containing the source code and run the following command:
 
@@ -30,7 +32,7 @@ Suppose we have a file named entities.txt containing the following entities:
     
 To sort these entities using a tape size of 2, we would run the following command:
 
-    ./bin/main entities.txt sorted_entities.txt 2
+    ./bin/main ./entities.txt ./sorted_entities.txt 2
     
 The resulting sorted_entities.txt file would contain the following entities in descending order of visit count:
 
