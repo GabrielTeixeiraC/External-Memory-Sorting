@@ -1,4 +1,4 @@
-# Secondary Memory Sorting
+# External Memory Sorting
 The main objective of this program is to process a series of entities (URLs and visit numbers) and organize them into tapes, which are blocks of entities that will be merged later. This organization allows for a more efficient sorting of data in secondary memory, as it is not necessary to load all the data at once in RAM.
 
 After dividing into tapes, the program sorts the tapes in decreasing order of visits, and in alphabetical order in case of a tie. This process is performed for each of the generated tapes with QuickSort.
